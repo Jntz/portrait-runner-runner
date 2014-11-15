@@ -12,17 +12,13 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.juotos.prr.Actors.Player;
+import com.juotos.prr.Actors.Wall;
 
 public class PRRGame extends ApplicationAdapter {
 	SpriteBatch batch;
-	Texture woodenTexture1, woodenTexture2, woodenTexture3, woodenTexture4, woodenTexture5, woodenTexture6;
 	Player player;
-	private GameState state = GameState.RUN;
-	
-	int woodenSize[][] = {
-			{70, 70, 70, 70, 70, 70}, 
-			{140, 220, 140, 220, 140, 220}
-	}; 
+	Wall wall1, wall2;
+	GameState state = GameState.RUN;
 	
 	OrthographicCamera camera;
 	Rectangle rect;
@@ -32,9 +28,11 @@ public class PRRGame extends ApplicationAdapter {
 		batch = new SpriteBatch();
 		camera = new OrthographicCamera();
 		player = new Player(this);
+		wall1 = new Wall();
+		wall2 = new Wall();
 		initializeAssets();
 		
-		camera.setToOrtho(false, 480, 800);
+		camera.setToOrtho(false, Constants.GAME_WIDTH, Constants.GAME_HEIGHT);
 	}
 
 	@Override
@@ -53,7 +51,6 @@ public class PRRGame extends ApplicationAdapter {
 				renderStopped();
 				break;
 		}
-			
 	}
 	
 	private void renderRun() {
@@ -85,12 +82,6 @@ public class PRRGame extends ApplicationAdapter {
 		state = (state == GameState.RUN) ? GameState.PAUSE : GameState.RUN;
 	}
 	private void initializeAssets() {
-		woodenTexture1 = new Texture(Gdx.files.external("Development/game-dev/portrait-runner-runner/assets/wood/1.png"));
-		woodenTexture2 = new Texture(Gdx.files.external("Development/game-dev/portrait-runner-runner/assets/wood/2.png"));
-		woodenTexture3 = new Texture(Gdx.files.external("Development/game-dev/portrait-runner-runner/assets/wood/3.png"));
-		woodenTexture4 = new Texture(Gdx.files.external("Development/game-dev/portrait-runner-runner/assets/wood/4.png"));
-		woodenTexture5 = new Texture(Gdx.files.external("Development/game-dev/portrait-runner-runner/assets/wood/5.png"));
-		woodenTexture6 = new Texture(Gdx.files.external("Development/game-dev/portrait-runner-runner/assets/wood/6.png"));
 	}
 	
 	private void anyKeyPressed() {
