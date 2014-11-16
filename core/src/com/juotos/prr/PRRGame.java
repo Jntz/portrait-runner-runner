@@ -9,29 +9,35 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.juotos.prr.Actors.Player;
 import com.juotos.prr.Actors.Wall;
+import com.juotos.prr.Helpers.Debugger;
 
 public class PRRGame extends ApplicationAdapter {
 	SpriteBatch batch;
 	Player player;
-	Wall wall1, wall2;
+	Wall wallLeft, wallRight;
 	GameState state = GameState.RUN;
 	
 	OrthographicCamera camera;
-	Rectangle rect;
+	
+	int current_position = 0;
+	int move_speed = 4;
 	
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
 		camera = new OrthographicCamera();
 		player = new Player(this);
-		wall1 = new Wall(0, 0);
-		wall2 = new Wall(Constants.GAME_WIDTH-70, 0);
+		wallLeft = new Wall(0, 0);
+		wallRight = new Wall(Constants.GAME_WIDTH-70, 0);
 		
 		camera.setToOrtho(false, Constants.GAME_WIDTH, Constants.GAME_HEIGHT);
+		camera.update();
 	}
 
 	@Override
@@ -56,6 +62,7 @@ public class PRRGame extends ApplicationAdapter {
 		Gdx.gl.glClearColor(0.5f, 0.5f, 1, 1);	//red,green,blue,alpha
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT); //Clear screen
 		camera.update();
+		camera.translate(0, move_speed, 0);
 		anyKeyPressed();
 		
 		batch.setProjectionMatrix(camera.combined);
@@ -64,8 +71,10 @@ public class PRRGame extends ApplicationAdapter {
 		batchUpdate();
 		batch.end();
 		
-		player.update();
-		
+		current_position += move_speed;
+		player.update(move_speed);
+		wallLeft.update(move_speed);
+		wallRight.update(move_speed);
 	}
 	private void renderPause() {
 		
@@ -83,13 +92,15 @@ public class PRRGame extends ApplicationAdapter {
 	
 	private void anyKeyPressed() {
 		if(Gdx.input.isKeyPressed(Keys.SPACE)) {
-			Gdx.app.log("loglog", "space entered");
+			Debugger.Log("loglog", "space entered");
 		}
 	}
 	private void batchUpdate() {
 		player.render(batch);
-		wall1.render(batch);
-		wall2.render(batch);
+		
+		wallLeft.render(batch);
+		wallRight.render(batch);
+		
 	}
 
 }

@@ -29,8 +29,9 @@ public class Player {
 	
 	public Player(PRRGame g) {
 		game = g;
-		playerTexture1 = new Texture(Gdx.files.external(Constants.ASSETS_DIR + PLAYER_ASSETS_DIR + "1.png"));
-		playerTexture2 = new Texture(Gdx.files.external(Constants.ASSETS_DIR + PLAYER_ASSETS_DIR + "2.png"));
+		playerTexture1 = new Texture(Gdx.files.external(Constants.ASSETS_DIR + PLAYER_ASSETS_DIR + "2.png"));
+		playerTexture2 = new Texture(Gdx.files.external(Constants.ASSETS_DIR + PLAYER_ASSETS_DIR + "1.png"));
+		//playerTexture2 = new Texture(Gdx.files.external(Constants.ASSETS_DIR + PLAYER_ASSETS_DIR + "2.png"));
 		playerTexture3 = new Texture(Gdx.files.external(Constants.ASSETS_DIR + PLAYER_ASSETS_DIR + "3.png"));
 		
 		x = 70;
@@ -42,8 +43,8 @@ public class Player {
 		sprite.setX(x);
 		sprite.setY(y);
 	}
-	public void update() {
-		y += 3f;
+	public void update(int speed_move) {
+		y += speed_move;
 		sprite.setY(y);
 	}
 	public void render(SpriteBatch batch) {
