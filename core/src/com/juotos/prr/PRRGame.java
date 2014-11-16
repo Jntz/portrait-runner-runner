@@ -28,9 +28,8 @@ public class PRRGame extends ApplicationAdapter {
 		batch = new SpriteBatch();
 		camera = new OrthographicCamera();
 		player = new Player(this);
-		wall1 = new Wall();
-		wall2 = new Wall();
-		initializeAssets();
+		wall1 = new Wall(0, 0);
+		wall2 = new Wall(Constants.GAME_WIDTH-70, 0);
 		
 		camera.setToOrtho(false, Constants.GAME_WIDTH, Constants.GAME_HEIGHT);
 	}
@@ -81,8 +80,6 @@ public class PRRGame extends ApplicationAdapter {
 		//Toggle pause or run state
 		state = (state == GameState.RUN) ? GameState.PAUSE : GameState.RUN;
 	}
-	private void initializeAssets() {
-	}
 	
 	private void anyKeyPressed() {
 		if(Gdx.input.isKeyPressed(Keys.SPACE)) {
@@ -90,8 +87,9 @@ public class PRRGame extends ApplicationAdapter {
 		}
 	}
 	private void batchUpdate() {
-		batch.draw(player.currentPlayerTexture(), player.x, player.y);
-		
+		player.render(batch);
+		wall1.render(batch);
+		wall2.render(batch);
 	}
 
 }
